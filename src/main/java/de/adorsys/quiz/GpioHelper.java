@@ -35,15 +35,12 @@ public class GpioHelper {
 	}
 
 	public static void shutLED(int number) {
-		System.out.println("given number " + number);
 		pin17.low();
 		if (number > 1) {
 			pin18.low();
-			System.out.println("two pins");
 		}
 		if (number > 2) {
 			pin27.low();
-			System.out.println("three pins");
 		}
 		try {
 			Thread.sleep(2000);
