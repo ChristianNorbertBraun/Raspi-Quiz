@@ -1,6 +1,7 @@
 package de.adorsys.quiz;
 
 import de.adorsys.quiz.resource.Example;
+import de.adorsys.quiz.resource.Quiz;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -13,6 +14,7 @@ public class RestApplication extends Application {
 	public Set<Class<?>> getClasses() {
 		final Set<Class<?>> returnValue = new HashSet<>();
 		returnValue.add(Example.class);
+		returnValue.add(Quiz.class);
 		return returnValue;
 	}
 } 
