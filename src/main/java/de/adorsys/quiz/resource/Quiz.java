@@ -1,10 +1,11 @@
 package de.adorsys.quiz.resource;
 
 import com.google.gson.Gson;
-import de.adorsys.quiz.GpioHelper;
 import de.adorsys.quiz.entity.Answer;
 import de.adorsys.quiz.entity.Riddle;
 import de.adorsys.quiz.entity.Setting;
+import de.adorsys.quiz.helper.GpioHelper;
+import de.adorsys.quiz.helper.SettingsHelper;
 
 import javax.annotation.PostConstruct;
 import javax.ws.rs.GET;
@@ -17,19 +18,18 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 
 @Path("/riddle")
 public class Quiz {
 
 	private Gson gson;
+	private SettingsHelper settingsHelper;
 
 	@PostConstruct
 	public void inti() {
 		GpioHelper.start();
+		settingsHelper = new SettingsHelper();
 		gson = new Gson();
 	}
 
@@ -66,7 +66,7 @@ public class Quiz {
 	}
 
 	private void upgradeSettings(int lvl) {
-		Setting setting = gson.fromJson(readFromFile("settings.json"), Setting.class);
+		Setting setting = settingsHelper.readSetting();
 		setting.setPoints(setting.getPoints() + lvl);
 		switch (lvl) {
 			case 1:
@@ -80,11 +80,11 @@ public class Quiz {
 				break;
 		}
 
-		writeToFile(setting);
+		settingsHelper.writeToFile(setting);
 	}
 
 	private Riddle chooseRiddle(int lvl) {
-		Setting setting = gson.fromJson(readFromFile("settings.json"), Setting.class);
+		Setting setting = settingsHelper.readSetting();
 		int riddleId;
 		switch (lvl) {
 			case 1:
@@ -122,25 +122,6 @@ public class Quiz {
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 			return "";
-		}
-	}
-
-	private void writeToFile(Setting setting) {
-		try {
-			ClassLoader classLoader = getClass().getClassLoader();
-			FileWriter fileWriter = new FileWriter(classLoader.getResource("settings.json").getFile(),false);
-			BufferedWriter writer = new BufferedWriter(fileWriter);
-			try {
-
-				writer.write(gson.toJson(setting));
-
-			} catch (Exception ex) {
-				System.out.print(ex.getMessage());
-			} finally {
-				writer.flush();
-			}
-		} catch (IOException ex) {
-			//die
 		}
 	}
 }

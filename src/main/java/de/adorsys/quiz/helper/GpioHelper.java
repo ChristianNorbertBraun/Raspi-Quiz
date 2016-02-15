@@ -1,4 +1,4 @@
-package de.adorsys.quiz;
+package de.adorsys.quiz.helper;
 
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
