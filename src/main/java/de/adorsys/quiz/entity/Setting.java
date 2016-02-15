@@ -8,6 +8,16 @@ public class Setting {
 	private int lvl_2;
 	private int lvl_3;
 
+	public Setting() {
+	}
+
+	public Setting(int points, int lvl_1, int lvl_2, int lvl_3) {
+		this.points = points;
+		this.lvl_1 = lvl_1;
+		this.lvl_2 = lvl_2;
+		this.lvl_3 = lvl_3;
+	}
+
 	public int getPoints() {
 		return points;
 	}
