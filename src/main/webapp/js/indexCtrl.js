@@ -13,7 +13,7 @@ var getRiddle = function( url )
 		success: function( data, textStatus, request )
 		{
 			riddle = data;
-			$( "#title" ).text( "Riddle on Level " + data.level );
+			$( "#title" ).text( data.title );
 			$( "#content" ).html( data.question );
 			answerUrl = request.getResponseHeader( 'X-answer' );
 		}
