@@ -58,12 +58,12 @@ public class Example {
 	}
 	
 	@GET
-	@Path("riddle")
+	@Path("riddle/lvl/1")
 	@Produces( MediaType.APPLICATION_JSON )
 	public Response createRiddle(){
 		Riddle riddle = new Riddle();
 		riddle.setId( "1" );
-		riddle.setQuestion( "2+2" );
+		riddle.setQuestion( "<h1>2+2</h1>" );
 		riddle.setAnswer( "4" );
 		riddle.setLevel( 1 );
 		
