@@ -54,8 +54,8 @@
         <artifactId>tomcat7-maven-plugin</artifactId>
         <version>2.2</version>
         <configuration>
-          <url>http://172.16.121.157:8080/manager/text</url>
-          <server>tomcat-localhost</server>
+          <url>http://172.16.121.158:8080/manager/text</url>
+          <server>tomcat-raspi</server>
           <path>/quiz</path>
         </configuration>
       </plugin>
