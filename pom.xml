@@ -11,21 +11,28 @@
   <name>Raspi-Quiz</name>
 
   <properties>
-    <basepath>quiz</basepath>
+    <basepath>/quiz</basepath>
   </properties>
 
- <!-- <profiles>
+  <profiles>
     <profile>
-      <id>tomcat-localhost</id>
+      <id>raspi-1</id>
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <tomcat-server>tomcat-localhost</tomcat-server>
-        <tomcat-url>http://172.16.120.162:8080/manager/text</tomcat-url>
+        <tomcat-server>tomcat-raspi</tomcat-server>
+        <tomcat-url>http://172.16.121.157:8080/manager/text</tomcat-url>
       </properties>
     </profile>
-  </profiles>-->
+    <profile>
+      <id>raspi-2</id>
+      <properties>
+        <tomcat-server>tomcat-raspi</tomcat-server>
+        <tomcat-url>http://172.16.121.158:8080/manager/text</tomcat-url>
+      </properties>
+    </profile>
+  </profiles>
   <build>
     <plugins>
       <plugin>
@@ -54,9 +61,9 @@
         <artifactId>tomcat7-maven-plugin</artifactId>
         <version>2.2</version>
         <configuration>
-          <url>http://172.16.121.158:8080/manager/text</url>
-          <server>tomcat-raspi</server>
-          <path>/quiz</path>
+          <url>${tomcat-url}</url>
+          <server>${tomcat-server}</server>
+          <path>${basepath}</path>
         </configuration>
       </plugin>
     </plugins>
