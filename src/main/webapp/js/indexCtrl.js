@@ -1,33 +1,50 @@
 var riddle;
 var answerUrl;
+var level;
 
-var getRiddle = function (level){
-	$.get(constants.baseurl + "/api/riddle/lvl/" + level,function(data)
+var getRiddle = function( url )
+{
+	
+	$.ajax(
 	{
-		riddle = data;
-		$("#title").text("Riddle on Level " + data.level);
-		$("#content").append(data.question);
-		answerUrl = data.getResponseHeader('X-answer');
-		console.log(answerUrl);
-	}); 
+		url: constants.baseurl + "/api/riddle/lvl/" + level,
+		type: 'GET',
+		accept:"application/json",
+		success: function( data, textStatus, request )
+		{
+			riddle = data;
+			$( "#title" ).text( "Riddle on Level " + data.level );
+			$( "#content" ).html( data.question );
+			answerUrl = request.getResponseHeader( 'X-answer' );
+		}
+	});
+
 }
 
 $( document ).ready(function( )
 {
-	getRiddle(1);
+	level = 1;
+	getRiddle( constants.baseurl + "/api/riddle/lvl/" + level );
 
-	$("#submit-button").click(function(){
-		var attributes = $("#answer").val();
+	$( "#submit-button") .click( function()
+	{
+		var answer = { answer: $( "#answer" ).val() };
 
-		$.ajax({
-			url: constants.baseurl + "/riddle/" + riddle.id + "/lvl/" + riddle.level,
+		$.ajax(
+		{
+			url: answerUrl,
 			type: 'PUT',
-			data: attributes,
+			data: JSON.stringify( answer ),
 			contentType:"application/json",
-			success: function(result){
-				console.log("Nice One");
+			success: function( data, textStatus, request )
+			{
+				getRiddle(request.getResponseHeader("X-lvl-" + level))
+			},
+			error: function( error )
+			{
+				console.log( "No!" );
 			}
-		})
+		});
 	})	
 
 
