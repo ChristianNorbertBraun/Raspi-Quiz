@@ -36,4 +36,12 @@ public class Maintenance {
 
 		return Response.ok(setting.getPoints()).build();
 	}
+	
+	@GET
+	@Path("/settings")
+	public Response settings() {
+		Setting setting = helper.readSetting();
+
+		return Response.ok(setting).build();
+	}
 }

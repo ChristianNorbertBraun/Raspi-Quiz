@@ -12,7 +12,7 @@ var getRiddle = function( url )
 	
 	$.ajax(
 	{
-		url: constants.baseurl + "/api/riddle/lvl/" + level,
+		url: url,
 		type: 'GET',
 		accept:"application/json",
 		success: function( data, textStatus, request )
@@ -29,6 +29,7 @@ var getRiddle = function( url )
 $( document ).ready(function( )
 {
 	level = 1;
+	activateButton(level);
 	getRiddle( constants.baseurl + "/api/riddle/lvl/" + level );
 
 	$( "#submit-button") .click( function()
