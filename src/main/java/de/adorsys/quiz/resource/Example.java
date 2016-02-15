@@ -6,6 +6,9 @@ import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 
+import de.adorsys.quiz.entity.Riddle;
+
+import javax.print.attribute.standard.Media;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -52,6 +55,19 @@ public class Example {
 			System.out.println("nö");
 		}
 		return Response.ok().build();
+	}
+	
+	@GET
+	@Path("riddle")
+	@Produces( MediaType.APPLICATION_JSON )
+	public Response createRiddle(){
+		Riddle riddle = new Riddle();
+		riddle.setId( "1" );
+		riddle.setQuestion( "2+2" );
+		riddle.setAnswer( "4" );
+		riddle.setLevel( 1 );
+		
+		return Response.ok(riddle).build();
 	}
 
 }
