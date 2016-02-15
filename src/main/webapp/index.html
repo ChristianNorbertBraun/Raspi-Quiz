@@ -1,17 +1,32 @@
 <html>
 <head>
+	<link rel="stylesheet" type="text/css" href="css/app.css">
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,700italic' rel='stylesheet' type='text/css'>
 	<script src="bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="resources/constants.js"></script>
 	<script src="js/indexCtrl.js"></script>
 	<title>TestPage</title>
 </head>
 
 <body>
-	<h1 id="title>"></h1>
-	<div id="content"></div>
+	<header>
+		<h1 id="header">Raspberry Pie</h1>
+	</header>
+	<div id="container">
+		<h1 id="title">TestTitle</h1>
+		<div id="content">Frage</div>
+		<div>
+			<input id="answer" class="button-group"placeholder="Your answer"/>
+			<div id="submit-button" class="round-button button-group"><a>Send</a></div>
+		</div>
 
-	<input id="answer" placeholder="Your answer"/>
-	<button id="submitButton">Send Answer</button>
-
+		<div id="level">
+			<div id="submit-button" class="round-button button-group"><a>1</a></div>
+			<div id="submit-button" class="round-button button-group"><a>2</a></div>
+			<div id="submit-button" class="round-button button-group"><a>3</a></div>
+		</div>	
+	</div>
+	
 </body>
 
 </html>
