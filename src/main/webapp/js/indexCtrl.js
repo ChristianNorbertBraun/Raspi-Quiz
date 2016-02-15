@@ -2,6 +2,11 @@ var riddle;
 var answerUrl;
 var level;
 
+var activateButton = function( id )
+{
+	$( "#" + id ).addClass( "active" );
+}
+
 var getRiddle = function( url )
 {
 	
@@ -45,7 +50,13 @@ $( document ).ready(function( )
 				console.log( "No!" );
 			}
 		});
-	})	
+	});	
 
-
+	$( ".level-button" ) .click( function( event )
+	{
+		$( ".active" ).removeClass( "active" );
+		level = $(this).attr('id');
+		activateButton( level );
+		getRiddle( constants.baseurl + "/api/riddle/lvl/" + level );
+	});
 });

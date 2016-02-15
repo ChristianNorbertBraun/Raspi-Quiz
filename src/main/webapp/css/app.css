@@ -27,7 +27,7 @@
 }
 
 #submit-button{
-	
+
 }
 
 .round-button{
@@ -49,6 +49,9 @@
 	position: relative;
 }
 
+.active{
+	background-color: #348899;
+}
 input{
 	height: 35px;
 	width: 30%;
