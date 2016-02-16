@@ -53,6 +53,6 @@ public class GpioHelper {
 					restart();
 				}
 			}
-		}).run();
+		}).start();
 	}
 }
