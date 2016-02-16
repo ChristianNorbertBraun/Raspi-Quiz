@@ -42,7 +42,7 @@ public class Quiz {
 		if (!answer.getAnswer().toLowerCase().equals(riddle.getAnswer().toLowerCase()))
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		GpioHelper.shutLED(riddle.getId());
-		if (riddleId < 5)
+		if (riddleId < 6)
 			return Response.ok().header("X-riddle", generateRiddleUrl(uriInfo, riddleId)).build();
 		return Response.noContent().build();
 	}
@@ -52,7 +52,7 @@ public class Quiz {
 	}
 
 	private String generateRiddleUrl(UriInfo uriInfo, int id) {
-		return uriInfo.getBaseUriBuilder().path("riddle").path(String.valueOf(id)).build().toString();
+		return uriInfo.getBaseUriBuilder().path("riddle").path(String.valueOf(id+1)).build().toString();
 	}
 
 }

@@ -46,25 +46,65 @@ public class GpioHelper {
 	public static void shutLED(int id) {
 		switch (id) {
 			case 0:
-				pin17.low();
+				demo();
 				break;
 			case 1:
-				pin18.low();
+				pin17.low();
 				break;
 			case 2:
-				pin27.low();
+				pin18.low();
 				break;
 			case 3:
-				pin22.low();
+				pin27.low();
 				break;
 			case 4:
-				pin23.low();
+				pin22.low();
 				break;
 			case 5:
+				pin23.low();
+				break;
+			case 6:
 				pin24.low();
 				animate();
 				break;
 		}
+	}
+
+	public static void demo() {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					for (int i = 0; i < 3; ++i) {
+						Thread.sleep(500);
+
+						pin17.low();
+						pin18.low();
+						pin27.low();
+						pin22.low();
+						pin23.low();
+						pin24.low();
+
+						Thread.sleep(500);
+
+						pin17.high();
+						pin18.high();
+						pin27.high();
+						pin22.high();
+						pin23.high();
+						pin24.high();
+
+					}
+				} catch (InterruptedException ex) {
+					pin17.high();
+					pin18.high();
+					pin27.high();
+					pin22.high();
+					pin23.high();
+					pin24.high();
+				}
+			}
+		}).start();
 	}
 
 	public static void animate() {

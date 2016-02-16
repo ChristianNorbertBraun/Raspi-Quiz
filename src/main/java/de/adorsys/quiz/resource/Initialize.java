@@ -15,11 +15,19 @@ public class Initialize {
 	public Response reset(@Context UriInfo uriInfo) {
 		GpioHelper.restart();
 
-		return Response.ok().header("X-riddle", generateRiddleUrl(uriInfo)).build();
+		return Response.ok().header("X-riddle", generateRiddleUrl(uriInfo, 0)).build();
 	}
 
-	private String generateRiddleUrl(UriInfo uriInfo) {
-		return uriInfo.getBaseUriBuilder().path("riddle").path("0").build().toString();
+	private String generateRiddleUrl(UriInfo uriInfo, int id) {
+		return uriInfo.getBaseUriBuilder().path("riddle").path(String.valueOf(id)).build().toString();
+	}
+
+	@GET
+	@Path("/restart")
+	public Response restart(@Context UriInfo uriInfo) {
+		GpioHelper.restart();
+
+		return Response.ok().header("X-riddle", generateRiddleUrl(uriInfo, 1)).build();
 	}
 
 }
