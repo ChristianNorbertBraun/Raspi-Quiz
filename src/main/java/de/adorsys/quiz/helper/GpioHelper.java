@@ -6,7 +6,6 @@ import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 
-
 public class GpioHelper {
 
 	public static GpioPinDigitalOutput pin17;
@@ -18,9 +17,9 @@ public class GpioHelper {
 		if (pin17 == null)
 			pin17 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "Pin17", PinState.HIGH);
 		if (pin18 == null)
-		pin18 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "Pin18", PinState.HIGH);
+			pin18 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "Pin18", PinState.HIGH);
 		if (pin27 == null)
-		pin27 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "Pin27", PinState.HIGH);
+			pin27 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "Pin27", PinState.HIGH);
 		gpio.shutdown();
 	}
 
@@ -42,13 +41,18 @@ public class GpioHelper {
 		if (number > 2) {
 			pin27.low();
 		}
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException ex) {
-			//no worries
-		} finally {
-			restart();
-		}
 
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException ex) {
+					//no worries
+				} finally {
+					restart();
+				}
+			}
+		}).run();
 	}
 }
