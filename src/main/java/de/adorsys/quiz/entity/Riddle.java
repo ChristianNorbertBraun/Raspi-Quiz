@@ -4,16 +4,16 @@ import java.io.Serializable;
 
 public class Riddle implements Serializable {
 
-	private String id;
+	private int id;
 	private String title;
 	private String question;
 	private String answer;
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

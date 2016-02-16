@@ -45,24 +45,24 @@ public class GpioHelper {
 		gpio.shutdown();
 	}
 
-	public static void shutLED(String id) {
+	public static void shutLED(int id) {
 		switch (id) {
-			case "0":
+			case 0:
 				pin17.low();
 				break;
-			case "1":
+			case 1:
 				pin18.low();
 				break;
-			case "2":
+			case 2:
 				pin27.low();
 				break;
-			case "3":
+			case 3:
 				pin22.low();
 				break;
-			case "4":
+			case 4:
 				pin23.low();
 				break;
-			case "5":
+			case 5:
 				pin24.low();
 				break;
 		}

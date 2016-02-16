@@ -2,13 +2,9 @@ package de.adorsys.quiz.helper;
 
 import com.google.gson.Gson;
 import de.adorsys.quiz.entity.Riddle;
-import de.adorsys.quiz.entity.Setting;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -30,20 +26,10 @@ public class FileManager {
 		return fileManager;
 	}
 
-	public Setting readSetting() {
-		ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
-		Future<String> future = singleThreadExecutor.submit(new ReadCallable("settings.json"));
-		try {
-			return gson.fromJson(future.get(), Setting.class);
-		} catch (InterruptedException | ExecutionException ex) {
-			ex.printStackTrace();
-			return null;
-		}
-	}
 
 	public Riddle readRiddle(int id) {
 		ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
-		Future<String> future = singleThreadExecutor.submit(new ReadCallable(getPathToRiddle(id)));
+		Future<String> future = singleThreadExecutor.submit(new ReadCallable(id + ".json"));
 		try {
 			return gson.fromJson(future.get(), Riddle.class);
 		} catch (InterruptedException | ExecutionException ex) {
@@ -52,51 +38,6 @@ public class FileManager {
 		}
 	}
 
-	public boolean writeToFile(Setting setting) {
-		ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
-		Future<Boolean> future = singleThreadExecutor.submit(new WriteCallable(setting));
-		try {
-			return future.get();
-		} catch (InterruptedException | ExecutionException ex) {
-			ex.printStackTrace();
-			return false;
-		}
-
-	}
-
-	private String getPathToRiddle(int id ) {
-		return String.format("%d.json", id);
-	}
-
-	private class WriteCallable implements Callable<Boolean> {
-
-		private Setting setting;
-
-		public WriteCallable(Setting setting) {
-			this.setting = setting;
-		}
-
-		@Override
-		public Boolean call() throws Exception {
-			try {
-				ClassLoader classLoader = getClass().getClassLoader();
-				FileWriter fileWriter = new FileWriter(classLoader.getResource("settings.json").getFile(), false);
-				BufferedWriter writer = new BufferedWriter(fileWriter);
-				try {
-
-					writer.write(gson.toJson(setting));
-
-				} catch (Exception ex) {
-					return false;
-				} finally {
-					writer.flush();
-					return true;
-				}
-			} catch (IOException ex) {
-				return false;
-			}
-		}
-	}
 
 	private class ReadCallable implements Callable<String> {
 		private String fileName;

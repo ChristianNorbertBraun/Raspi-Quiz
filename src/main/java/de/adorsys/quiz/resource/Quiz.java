@@ -2,7 +2,6 @@ package de.adorsys.quiz.resource;
 
 import de.adorsys.quiz.entity.Answer;
 import de.adorsys.quiz.entity.Riddle;
-import de.adorsys.quiz.entity.Setting;
 import de.adorsys.quiz.helper.FileManager;
 import de.adorsys.quiz.helper.GpioHelper;
 
@@ -17,7 +16,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-@Path("/riddle")
+@Path("/riddle/{riddleId}")
 public class Quiz {
 
 	private FileManager fileManager;
@@ -30,41 +29,30 @@ public class Quiz {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getRiddle(@Context UriInfo uriInfo) {
-		Riddle riddle = chooseRiddle();
+	public Response getRiddle(@PathParam("riddleId") int riddleId, @Context UriInfo uriInfo) {
+		Riddle riddle = fileManager.readRiddle(riddleId);
 		if (riddle == null)
 			return Response.status(Response.Status.NOT_FOUND).build();
-		return Response.ok(riddle).header("X-answer", generateAnswerUrl(uriInfo,  riddle.getId())).build();
+		return Response.ok(riddle).header("X-answer", generateAnswerUrl(uriInfo, riddle.getId())).build();
 	}
 
 	@PUT
-	@Path("/{riddleId}")
 	public Response answerRiddle(@PathParam("riddleId") int riddleId,  @Context UriInfo uriInfo, Answer answer) {
 		Riddle riddle = fileManager.readRiddle(riddleId);
 		if (!answer.getAnswer().toLowerCase().equals(riddle.getAnswer().toLowerCase()))
 			return Response.status(Response.Status.BAD_REQUEST).build();
-		upgradeSettings();
 		GpioHelper.shutLED(riddle.getId());
-		return Response.ok().header("X-riddle", generateRiddleUrl(uriInfo)).build();
+		if (riddleId < 5)
+			return Response.ok().header("X-riddle", generateRiddleUrl(uriInfo, riddleId)).build();
+		return Response.noContent().build();
 	}
 
-	private String generateAnswerUrl(UriInfo uriInfo, String id) {
-		return uriInfo.getBaseUriBuilder().path("riddle").path(id).build().toString();
+	private String generateAnswerUrl(UriInfo uriInfo, int id) {
+		return uriInfo.getBaseUriBuilder().path("riddle").path(String.valueOf(id)).build().toString();
 	}
 
-	private String generateRiddleUrl(UriInfo uriInfo) {
-		return uriInfo.getBaseUriBuilder().path("riddle").build().toString();
+	private String generateRiddleUrl(UriInfo uriInfo, int id) {
+		return uriInfo.getBaseUriBuilder().path("riddle").path(String.valueOf(id)).build().toString();
 	}
 
-	private void upgradeSettings() {
-		Setting setting = fileManager.readSetting();
-		setting.setRiddle(setting.getRiddle()+1);
-
-		fileManager.writeToFile(setting);
-	}
-
-	private Riddle chooseRiddle() {
-		Setting setting = fileManager.readSetting();
-		return fileManager.readRiddle(setting.getRiddle());
-	}
 }
