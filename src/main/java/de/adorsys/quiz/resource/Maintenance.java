@@ -2,7 +2,7 @@ package de.adorsys.quiz.resource;
 
 import de.adorsys.quiz.entity.Setting;
 import de.adorsys.quiz.helper.GpioHelper;
-import de.adorsys.quiz.helper.SettingsHelper;
+import de.adorsys.quiz.helper.FileManager;
 
 import javax.annotation.PostConstruct;
 import javax.ws.rs.GET;
@@ -12,11 +12,11 @@ import javax.ws.rs.core.Response;
 @Path("/maintenance")
 public class Maintenance {
 
-	private SettingsHelper helper;
+	private FileManager helper;
 
 	@PostConstruct
 	public void init() {
-		helper = new SettingsHelper();
+		helper = new FileManager();
 	}
 
 	@GET

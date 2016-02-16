@@ -1,11 +1,10 @@
 package de.adorsys.quiz.resource;
 
-import com.google.gson.Gson;
 import de.adorsys.quiz.entity.Answer;
 import de.adorsys.quiz.entity.Riddle;
 import de.adorsys.quiz.entity.Setting;
 import de.adorsys.quiz.helper.GpioHelper;
-import de.adorsys.quiz.helper.SettingsHelper;
+import de.adorsys.quiz.helper.FileManager;
 
 import javax.annotation.PostConstruct;
 import javax.ws.rs.GET;
@@ -17,20 +16,16 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import java.io.BufferedReader;
-import java.io.FileReader;
 
 @Path("/riddle")
 public class Quiz {
 
-	private Gson gson;
-	private SettingsHelper settingsHelper;
+	private FileManager fileManager;
 
 	@PostConstruct
-	public void inti() {
+	public void init() {
 		GpioHelper.start();
-		settingsHelper = new SettingsHelper();
-		gson = new Gson();
+		fileManager = FileManager.getInstance();
 	}
 
 	@GET
@@ -44,8 +39,7 @@ public class Quiz {
 	@PUT
 	@Path("/{riddleId}/lvl/{lvl}")
 	public Response answerRiddle(@PathParam("riddleId") int riddleId, @PathParam("lvl") int lvl, @Context UriInfo uriInfo, Answer answer) {
-		String pathToFile = getPathToRiddle(riddleId, lvl);
-		Riddle riddle = gson.fromJson(readFromFile(pathToFile), Riddle.class);
+		Riddle riddle = fileManager.readRiddle(riddleId, lvl);
 		if (!answer.getAnswer().toLowerCase().equals(riddle.getAnswer().toLowerCase()))
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		upgradeSettings(lvl);
@@ -66,7 +60,7 @@ public class Quiz {
 	}
 
 	private void upgradeSettings(int lvl) {
-		Setting setting = settingsHelper.readSetting();
+		Setting setting = fileManager.readSetting();
 		setting.setPoints(setting.getPoints() + lvl);
 		switch (lvl) {
 			case 1:
@@ -80,11 +74,11 @@ public class Quiz {
 				break;
 		}
 
-		settingsHelper.writeToFile(setting);
+		fileManager.writeToFile(setting);
 	}
 
 	private Riddle chooseRiddle(int lvl) {
-		Setting setting = settingsHelper.readSetting();
+		Setting setting = fileManager.readSetting();
 		int riddleId;
 		switch (lvl) {
 			case 1:
@@ -100,28 +94,6 @@ public class Quiz {
 				riddleId = -1;
 				break;
 		}
-		return gson.fromJson(readFromFile(getPathToRiddle(riddleId, lvl)), Riddle.class);
-	}
-
-	private String getPathToRiddle(int id, int lvl) {
-		return String.format("lvl_%d/%d.json", lvl, id);
-	}
-
-	private String readFromFile(String pathToFile) {
-		try {
-			ClassLoader classLoader = getClass().getClassLoader();
-			FileReader fileReader = new FileReader(classLoader.getResource(pathToFile).getFile());
-			BufferedReader reader = new BufferedReader(fileReader);
-
-			String temp;
-			StringBuilder text = new StringBuilder();
-			while ((temp = reader.readLine()) != null) {
-				text.append(temp);
-			}
-			return text.toString();
-		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
-			return "";
-		}
+		return fileManager.readRiddle(riddleId, lvl);
 	}
 }
