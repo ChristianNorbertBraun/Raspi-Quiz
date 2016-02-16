@@ -33,7 +33,7 @@ public class Quiz {
 		Riddle riddle = fileManager.readRiddle(riddleId);
 		if (riddle == null)
 			return Response.status(Response.Status.NOT_FOUND).build();
-		return Response.ok(riddle).header("X-answer", generateAnswerUrl(uriInfo, riddle.getId())).build();
+		return Response.ok(riddle).header("X-answer", generateUrl(uriInfo, riddle.getId())).build();
 	}
 
 	@PUT
@@ -43,16 +43,13 @@ public class Quiz {
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		GpioHelper.shutLED(riddle.getId());
 		if (riddleId < 6)
-			return Response.ok().header("X-riddle", generateRiddleUrl(uriInfo, riddleId)).build();
+			return Response.ok().header("X-riddle", generateUrl(uriInfo, riddleId+1)).build();
 		return Response.noContent().build();
 	}
 
-	private String generateAnswerUrl(UriInfo uriInfo, int id) {
+	private String generateUrl(UriInfo uriInfo, int id) {
 		return uriInfo.getBaseUriBuilder().path("riddle").path(String.valueOf(id)).build().toString();
 	}
 
-	private String generateRiddleUrl(UriInfo uriInfo, int id) {
-		return uriInfo.getBaseUriBuilder().path("riddle").path(String.valueOf(id+1)).build().toString();
-	}
 
 }
