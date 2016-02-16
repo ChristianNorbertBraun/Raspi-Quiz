@@ -16,7 +16,7 @@ public class Maintenance {
 
 	@PostConstruct
 	public void init() {
-		helper = new FileManager();
+		helper = FileManager.getInstance();
 	}
 
 	@GET
