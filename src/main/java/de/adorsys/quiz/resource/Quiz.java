@@ -34,7 +34,7 @@ public class Quiz {
 	public Response getRiddle(@PathParam("lvl") int lvl, @Context UriInfo uriInfo) {
 		Riddle riddle = chooseRiddle(lvl);
 		if (riddle == null)
-			return Response.status(Response.Status.BAD_REQUEST).build();
+			return Response.status(Response.Status.NOT_FOUND).build();
 		return Response.ok(riddle).header("X-answer", generateAnswerUrl(uriInfo, riddle.getLevel(), riddle.getId())).build();
 	}
 
