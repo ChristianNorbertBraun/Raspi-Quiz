@@ -17,8 +17,12 @@ import java.util.concurrent.Future;
 
 public class FileManager {
 
-	private Gson gson;
 	private static FileManager fileManager;
+	private Gson gson;
+
+	private FileManager() {
+		gson = new Gson();
+	}
 
 	public static FileManager getInstance() {
 		if (fileManager == null)
@@ -26,19 +30,12 @@ public class FileManager {
 		return fileManager;
 	}
 
-	private FileManager() {
-		gson = new Gson();
-	}
-
 	public Setting readSetting() {
 		ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
 		Future<String> future = singleThreadExecutor.submit(new ReadCallable("settings.json"));
-		try
-		{
+		try {
 			return gson.fromJson(future.get(), Setting.class);
-		}
-		catch(InterruptedException | ExecutionException ex)
-		{
+		} catch (InterruptedException | ExecutionException ex) {
 			ex.printStackTrace();
 			return null;
 		}
@@ -47,12 +44,9 @@ public class FileManager {
 	public Riddle readRiddle(int id, int lvl) {
 		ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
 		Future<String> future = singleThreadExecutor.submit(new ReadCallable(getPathToRiddle(id, lvl)));
-		try
-		{
+		try {
 			return gson.fromJson(future.get(), Riddle.class);
-		}
-		catch(InterruptedException | ExecutionException ex)
-		{
+		} catch (InterruptedException | ExecutionException ex) {
 			ex.printStackTrace();
 			return null;
 		}
@@ -61,12 +55,9 @@ public class FileManager {
 	public boolean writeToFile(Setting setting) {
 		ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
 		Future<Boolean> future = singleThreadExecutor.submit(new WriteCallable(setting));
-		try
-		{
+		try {
 			return future.get();
-		}
-		catch(InterruptedException | ExecutionException ex)
-		{
+		} catch (InterruptedException | ExecutionException ex) {
 			ex.printStackTrace();
 			return false;
 		}
@@ -89,7 +80,7 @@ public class FileManager {
 		public Boolean call() throws Exception {
 			try {
 				ClassLoader classLoader = getClass().getClassLoader();
-				FileWriter fileWriter = new FileWriter(classLoader.getResource("settings.json").getFile(),false);
+				FileWriter fileWriter = new FileWriter(classLoader.getResource("settings.json").getFile(), false);
 				BufferedWriter writer = new BufferedWriter(fileWriter);
 				try {
 

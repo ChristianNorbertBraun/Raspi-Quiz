@@ -1,8 +1,8 @@
 package de.adorsys.quiz.resource;
 
 import de.adorsys.quiz.entity.Setting;
-import de.adorsys.quiz.helper.GpioHelper;
 import de.adorsys.quiz.helper.FileManager;
+import de.adorsys.quiz.helper.GpioHelper;
 
 import javax.annotation.PostConstruct;
 import javax.ws.rs.GET;
@@ -22,7 +22,7 @@ public class Maintenance {
 	@GET
 	public Response reset() {
 		GpioHelper.restart();
-		Setting setting = new Setting(0,0,0,0);
+		Setting setting = new Setting(0, 0, 0, 0);
 		if (helper.writeToFile(setting))
 			return Response.ok().build();
 		return Response.status(Response.Status.BAD_REQUEST).build();
@@ -36,7 +36,7 @@ public class Maintenance {
 
 		return Response.ok(setting.getPoints()).build();
 	}
-	
+
 	@GET
 	@Path("/settings")
 	public Response settings() {

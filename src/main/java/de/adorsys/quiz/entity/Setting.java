@@ -1,6 +1,5 @@
 package de.adorsys.quiz.entity;
 
-
 public class Setting {
 
 	private int points;

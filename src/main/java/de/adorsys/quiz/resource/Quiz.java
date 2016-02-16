@@ -3,8 +3,8 @@ package de.adorsys.quiz.resource;
 import de.adorsys.quiz.entity.Answer;
 import de.adorsys.quiz.entity.Riddle;
 import de.adorsys.quiz.entity.Setting;
-import de.adorsys.quiz.helper.GpioHelper;
 import de.adorsys.quiz.helper.FileManager;
+import de.adorsys.quiz.helper.GpioHelper;
 
 import javax.annotation.PostConstruct;
 import javax.ws.rs.GET;
@@ -33,6 +33,8 @@ public class Quiz {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getRiddle(@PathParam("lvl") int lvl, @Context UriInfo uriInfo) {
 		Riddle riddle = chooseRiddle(lvl);
+		if (riddle == null)
+			return Response.status(Response.Status.BAD_REQUEST).build();
 		return Response.ok(riddle).header("X-answer", generateAnswerUrl(uriInfo, riddle.getLevel(), riddle.getId())).build();
 	}
 
@@ -44,11 +46,8 @@ public class Quiz {
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		upgradeSettings(lvl);
 		GpioHelper.shutLED(riddle.getLevel());
-		return Response.ok()
-				.header("X-lvl-1", generateRiddleUrl(uriInfo, 1))
-				.header("X-lvl-2", generateRiddleUrl(uriInfo, 2))
-				.header("X-lvl-3", generateRiddleUrl(uriInfo, 3))
-				.build();
+		return Response.ok().header("X-lvl-1", generateRiddleUrl(uriInfo, 1)).header("X-lvl-2", generateRiddleUrl(uriInfo, 2))
+				.header("X-lvl-3", generateRiddleUrl(uriInfo, 3)).build();
 	}
 
 	private String generateAnswerUrl(UriInfo uriInfo, int lvl, String id) {
