@@ -41,9 +41,9 @@ public class FileManager {
 		}
 	}
 
-	public Riddle readRiddle(int id, int lvl) {
+	public Riddle readRiddle(int id) {
 		ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
-		Future<String> future = singleThreadExecutor.submit(new ReadCallable(getPathToRiddle(id, lvl)));
+		Future<String> future = singleThreadExecutor.submit(new ReadCallable(getPathToRiddle(id)));
 		try {
 			return gson.fromJson(future.get(), Riddle.class);
 		} catch (InterruptedException | ExecutionException ex) {
@@ -64,8 +64,8 @@ public class FileManager {
 
 	}
 
-	private String getPathToRiddle(int id, int lvl) {
-		return String.format("lvl_%d/%d.json", lvl, id);
+	private String getPathToRiddle(int id ) {
+		return String.format("%d.json", id);
 	}
 
 	private class WriteCallable implements Callable<Boolean> {

@@ -8,7 +8,6 @@ public class Riddle implements Serializable {
 	private String title;
 	private String question;
 	private String answer;
-	private int level;
 
 	public String getId() {
 		return id;
@@ -40,14 +39,6 @@ public class Riddle implements Serializable {
 
 	public void setAnswer(String answer) {
 		this.answer = answer;
-	}
-
-	public int getLevel() {
-		return level;
-	}
-
-	public void setLevel(int level) {
-		this.level = level;
 	}
 
 }
