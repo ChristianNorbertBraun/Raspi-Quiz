@@ -22,19 +22,11 @@ public class Maintenance {
 	@GET
 	public Response reset() {
 		GpioHelper.restart();
-		Setting setting = new Setting(0, 0, 0, 0);
+		Setting setting = new Setting(0);
 		if (helper.writeToFile(setting))
 			return Response.ok().build();
 		return Response.status(Response.Status.BAD_REQUEST).build();
 
-	}
-
-	@GET
-	@Path("/points")
-	public Response points() {
-		Setting setting = helper.readSetting();
-
-		return Response.ok(setting.getPoints()).build();
 	}
 
 	@GET
