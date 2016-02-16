@@ -1,5 +1,7 @@
 package de.adorsys.quiz.entity;
 
+import com.owlike.genson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 
 public class Riddle implements Serializable {
@@ -7,6 +9,7 @@ public class Riddle implements Serializable {
 	private int id;
 	private String title;
 	private String question;
+	@JsonIgnore
 	private String answer;
 
 	public int getId() {
