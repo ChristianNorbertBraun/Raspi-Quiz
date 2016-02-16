@@ -33,7 +33,6 @@ public class GpioHelper {
 	}
 
 	public static void restart() {
-		final GpioController gpio = GpioFactory.getInstance();
 		if (pin17 == null || pin18 == null || pin27 == null || pin22 == null || pin23 == null || pin24 == null)
 			start();
 		pin17.high();
@@ -42,7 +41,6 @@ public class GpioHelper {
 		pin22.high();
 		pin23.high();
 		pin24.high();
-		gpio.shutdown();
 	}
 
 	public static void shutLED(int id) {
@@ -64,7 +62,55 @@ public class GpioHelper {
 				break;
 			case 5:
 				pin24.low();
+				animate();
 				break;
 		}
+	}
+
+	public static void animate() {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(1000);
+
+					pin24.pulse(500, true);
+					pin23.pulse(500, true);
+					pin22.pulse(500, true);
+					pin27.pulse(500, true);
+					pin18.pulse(500, true);
+					pin17.pulse(500, true);
+
+					for (int i = 0; i < 3; ++i) {
+						Thread.sleep(500);
+
+						pin17.high();
+						pin18.high();
+						pin27.high();
+						pin22.high();
+						pin23.high();
+						pin24.high();
+
+						Thread.sleep(500);
+
+						pin17.low();
+						pin18.low();
+						pin27.low();
+						pin22.low();
+						pin23.low();
+						pin24.low();
+					}
+
+				} catch (InterruptedException ex) {
+					pin17.low();
+					pin18.low();
+					pin27.low();
+					pin22.low();
+					pin23.low();
+					pin24.low();
+				}
+			}
+		}).start();
+
 	}
 }
