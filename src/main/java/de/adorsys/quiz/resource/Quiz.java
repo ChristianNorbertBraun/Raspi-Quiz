@@ -39,7 +39,7 @@ public class Quiz {
 	@PUT
 	public Response answerRiddle(@PathParam("riddleId") int riddleId,  @Context UriInfo uriInfo, Answer answer) {
 		Riddle riddle = fileManager.readRiddle(riddleId);
-		if (!answer.getAnswer().toLowerCase().equals(riddle.getAnswer().toLowerCase()))
+		if (!answer.getAnswer().toLowerCase().trim().equals(riddle.getAnswer().toLowerCase()))
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		GpioHelper.shutLED(riddle.getId());
 		if (riddleId < 6)

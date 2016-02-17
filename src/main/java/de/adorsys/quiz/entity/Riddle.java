@@ -35,11 +35,11 @@ public class Riddle implements Serializable {
 	public void setQuestion(String question) {
 		this.question = question;
 	}
-
+	@JsonIgnore
 	public String getAnswer() {
 		return answer;
 	}
-
+	@JsonIgnore
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
