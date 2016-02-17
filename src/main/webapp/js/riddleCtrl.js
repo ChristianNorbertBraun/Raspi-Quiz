@@ -68,5 +68,13 @@ $( document ).ready(function( )
 	{
 		var answer = { answer: $( "#answer" ).val() };
 		sendAnswer( answerUrl, answer );
-	});	
+	});
+
+	$( "#answer" ).keyup(function ( e ) 
+	{
+    	if ( e.keyCode == 13 ) {
+        	var answer = { answer: $( "#answer" ).val() };
+			sendAnswer( answerUrl, answer );
+    	}
+	});
 });

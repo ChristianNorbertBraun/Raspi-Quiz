@@ -1,9 +1,17 @@
 
 
+@media (min-width:600px){
+	#container{
+		margin-left: 20%;
+		margin-right: 20%;
+	}
+}
+
 #container{
-	text-align: center;
 	width: 100%;
 	display: inline-block;
+	margin-left: 5%;
+	margin-right: 5%;
 	font-family: 'Roboto', sans-serif;
 	font-weight: 400;
 }
@@ -14,32 +22,37 @@
 }
 
 #content{
-	margin: 4em;
-	margin-left: 20%;
-	margin-right: 20%;
+	margin-top: 2em;
+	width: 100%;
+	margin-bottom: 2em;
 }
 
 #submit-button{
+	width: 30%;
+}
 
+.button-group{
+	margin-left: 5%;
+	margin-right: 5%;
 }
 
 input{
-	height: 35px;
-	width: 30%;
-	margin: 16px;
-	border: 2px solid black;
+	height: 4em;
+	width: 40%;
+	margin-right: 0.5em;
+	border: 0.1em solid black;
 	font-family: 'Roboto', sans-serif;
-	padding: 8px;
+	padding: 1em;
 }
 
 html, body {
-    padding: 0;
-    margin: 0;
+	padding: 0;
+	margin: 0;
 }
 
 button{
 	width: 15%;
-	height: 30px;
+	height: 4em;
 	background-color: #962D3E;
 	color: white;
 }
