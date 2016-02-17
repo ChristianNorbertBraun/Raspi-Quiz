@@ -1,6 +1,6 @@
 {  
-   "title":"Eine lange Reise",
-   "answer":"4",
+   "title":"1.000.000 Schließfächer",
+   "answer":"offen",
    "id":"2",
-   "question":"<p>Es war einmal ein kleiner Mann der hatte folgende Dinge an:</p><ul><li>Einen Hut</li><li>Einen Schuh</li><li>Einen Ski</li></ul><h3>Frage</h3><p>Was war der Mann von Beruf?<img src=\"http://www.online-image-editor.com//styles/2014/images/example_image.png\"/></p>"
+   "question":"<p>Stell dir vor du stehst vor 1.000.000 Schlie&szlig;f&auml;cher.Nun &ouml;ffnest du alle Schlie&szlig;f&auml;cher.Wenn alle ge&ouml;ffnet sind schlie&szlig;t du jedes 2 Schlie&szlig;fach (Schlie&szlig;fach 2, 4, 6, ...).Nun gehst du erneut durch und flippst jedes 3. Schlie&szlig;fach (Schlie&szlig;fach 3, 6, 9, ...). Flippen bedeuten ein offen Schlie&szlig;fach schlie&szlig;t du und ein geschlossenes Schlie&szlig;fach &ouml;ffnest du.Im Anschluss wiederholst du das ganze mit jedem 4., 5., ... 1.000.000 Schlie&szlig;fach.</p><p>Ist am Ende das 1.000.000 Schlie&szlig;fach &quot;offen&quot; oder &quot;geschlossen&quot;?</p>"
 }
