@@ -2,9 +2,7 @@ package de.adorsys.quiz.entity;
 
 import com.owlike.genson.annotation.JsonIgnore;
 
-import java.io.Serializable;
-
-public class Riddle implements Serializable {
+public class Riddle {
 
 	private int id;
 	private String title;

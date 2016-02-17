@@ -3,5 +3,5 @@
   "answer":"36893488147419103000",
   "id":"1",
   "question":
-    "<p>Du hast ein Schachbrett (8x8 Felder) du legst auf das</p><ol><li>Feld ein Reiskorn auf das</li><li>Feld zwei Reiskörner auf das</li><li>Feld vier Reiskörner.</li><li>…</li></ol><p>So verdoppelst du pro Feld die Anzahl der Reiskörner verglichen zu dem Feld davor.Wie viele Reiskörner liegen insgesamt auf dem Schachbrett.</p>"
+    "<p>Du hast ein Schachbrett (8x8 Felder) du legst auf das</p><ol><li>Feld ein Reiskorn auf das</li><li>Feld zwei Reisk&ouml;rner auf das</li><li>Feld vier Reisk&ouml;rner.</li><li>...</li></ol><p>So verdoppelst du pro Feld die Anzahl der Reisk&ouml;rner verglichen zu dem Feld davor.Wie viele Reisk&ouml;rner liegen insgesamt auf dem Schachbrett.</p>"
 }
