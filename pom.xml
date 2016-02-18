@@ -29,7 +29,7 @@
       <id>raspi-2</id>
       <properties>
         <tomcat-server>tomcat-raspi</tomcat-server>
-        <tomcat-url>http://172.16.121.158:8080/manager/text</tomcat-url>
+        <tomcat-url>http://172.16.121.176:8080/manager/text</tomcat-url>
       </properties>
     </profile>
   </profiles>
