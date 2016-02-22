@@ -51,6 +51,8 @@ var sendAnswer = function( url, data )
 				alert( "Du hast gewonnen" );
 			else
 				getRiddle( request.getResponseHeader( 'X-riddle' ) );
+
+			$( "#answer" ).val("");
 		},
 		error: function( error )
 		{
@@ -67,8 +69,6 @@ $( document ).ready(function( )
 	$( "#submit-button") .click( function()
 	{
 		var answer = { answer: $( "#answer" ).val() };
-		sendAnswer( answerUrl, answer );
-		$( "#answer" ).val("");
 	});
 
 	$( "#answer" ).keyup(function ( e ) 
@@ -76,7 +76,7 @@ $( document ).ready(function( )
     	if ( e.keyCode == 13 ) {
         	var answer = { answer: $( "#answer" ).val() };
 			sendAnswer( answerUrl, answer );
-			$( "#answer" ).val("");
+		
     	}
 	});
 });
