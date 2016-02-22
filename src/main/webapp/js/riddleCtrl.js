@@ -68,6 +68,7 @@ $( document ).ready(function( )
 	{
 		var answer = { answer: $( "#answer" ).val() };
 		sendAnswer( answerUrl, answer );
+		$( "#answer" ).val("");
 	});
 
 	$( "#answer" ).keyup(function ( e ) 
@@ -75,6 +76,7 @@ $( document ).ready(function( )
     	if ( e.keyCode == 13 ) {
         	var answer = { answer: $( "#answer" ).val() };
 			sendAnswer( answerUrl, answer );
+			$( "#answer" ).val("");
     	}
 	});
 });
